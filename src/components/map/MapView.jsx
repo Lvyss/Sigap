@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import { MAP_CONFIG } from '@/data/mapConfig';
 import FasilitasLayer from './FasilitasLayer';
+import FlyToHandler from './FlyToHandler';
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -22,7 +23,7 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail }) {
+export default function MapView({ onLihatDetail, flyToTarget }) {
   return (
     <MapContainer
       center={MAP_CONFIG.center}
@@ -38,6 +39,7 @@ export default function MapView({ onLihatDetail }) {
       />
       <SetInitialView />
       <FasilitasLayer onLihatDetail={onLihatDetail} />
+      <FlyToHandler target={flyToTarget} />
     </MapContainer>
   );
 }

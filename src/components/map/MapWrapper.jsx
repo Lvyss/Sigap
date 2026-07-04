@@ -15,6 +15,6 @@ const MapView = dynamic(() => import('./MapView'), {
   ),
 });
 
-export default function MapWrapper({ onLihatDetail }) {
-  return <MapView onLihatDetail={onLihatDetail} />;
+export default function MapWrapper({ onLihatDetail, flyToTarget }) {
+  return <MapView onLihatDetail={onLihatDetail} flyToTarget={flyToTarget} />;
 }
