@@ -8,7 +8,8 @@ export default function TombolLokasi({ onLokasi, loading }) {
     <button
       onClick={onLokasi}
       disabled={loading}
-      className="absolute bottom-8 right-3 z-[1000] bg-white hover:bg-gray-50 text-gray-700 rounded-xl p-2.5 shadow-lg border border-gray-200 transition-all hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed"
+      style={{ bottom: 'calc(env(safe-area-inset-bottom) + 5rem)' }}
+      className="absolute right-3 z-[1000] bg-white hover:bg-gray-50 text-gray-700 rounded-xl p-2.5 shadow-lg border border-gray-200 transition-all hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed"
       title="Lokasi Saya"
     >
       {loading ? (

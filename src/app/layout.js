@@ -3,7 +3,13 @@ import './globals.css';
 
 export const metadata = {
   title: 'SIGAP — Peta Desa Sidomukti',
-  description: 'Sistem Informasi Geografis dan Potensi Desa Sidomukti, Kec. Bener, Kab. Purworejo',
+  description: 'Sistem Informasi Geografis dan Potensi Desa Sidomukti',
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover', // ← ini yang bikin safe area aktif
 };
 
 export default function RootLayout({ children }) {
@@ -13,3 +19,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+

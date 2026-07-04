@@ -46,3 +46,9 @@ body {
 .panel-transition {
   transition: width 300ms ease, opacity 300ms ease;
 }
+
+/* Support safe area mobile (notch, nav bar) */
+:root {
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+}
