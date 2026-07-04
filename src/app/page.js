@@ -16,6 +16,7 @@ export default function Home() {
   const [loadingLokasi, setLoadingLokasi] = useState(false);
   const [posisiUser, setPosisiUser] = useState(null);
   const [errorLokasi, setErrorLokasi] = useState(null);
+  const [aktifFilter, setAktifFilter] = useState(null); // null = semua tampil
 
   const handleFasilitasClick = (fasilitas) => {
     setFlyToTarget(fasilitas);
@@ -78,11 +79,12 @@ export default function Home() {
 
       {/* KIRI: Peta */}
       <div className="flex-1 h-full relative">
-        <MapWrapper
-          onLihatDetail={setSelectedFasilitas}
-          flyToTarget={flyToTarget}
-          posisiUser={posisiUser}
-        />
+ <MapWrapper
+  onLihatDetail={setSelectedFasilitas}
+  flyToTarget={flyToTarget}
+  posisiUser={posisiUser}
+  aktifFilter={aktifFilter}
+/>
 
         <TombolFullscreen
           isFullscreen={isFullscreen}
@@ -120,10 +122,11 @@ export default function Home() {
             isFullscreen ? 'translate-x-full' : 'translate-x-0'
           }`}
         >
-          <PanelKanan
-            onFasilitasClick={handleFasilitasClick}
-            selectedId={selectedId}
-          />
+<PanelKanan
+  onFasilitasClick={handleFasilitasClick}
+  selectedId={selectedId}
+  onFilterChange={setAktifFilter}
+/>
         </div>
       </div>
 

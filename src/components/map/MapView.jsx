@@ -24,7 +24,7 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail, flyToTarget, posisiUser }) {
+export default function MapView({ onLihatDetail, flyToTarget, posisiUser,aktifFilter  }) {
   return (
     <MapContainer
       center={MAP_CONFIG.center}
@@ -39,7 +39,7 @@ export default function MapView({ onLihatDetail, flyToTarget, posisiUser }) {
         attribution={MAP_CONFIG.tileAttribution}
       />
       <SetInitialView />
-      <FasilitasLayer onLihatDetail={onLihatDetail} />
+      <FasilitasLayer onLihatDetail={onLihatDetail} aktifFilter={aktifFilter} />  
       <FlyToHandler target={flyToTarget} />
       <LokasiMarker posisi={posisiUser} />
     </MapContainer>

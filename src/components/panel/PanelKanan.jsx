@@ -1,18 +1,24 @@
 // src/components/panel/PanelKanan.jsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Legenda from './Legenda';
 import DaftarFasilitas from './DaftarFasilitas';
+import SearchBar from './SearchBar';
 import { KATEGORI } from '@/data/fasilitas';
 import { Map, List } from 'lucide-react';
 
-// Semua kategori aktif by default
 const SEMUA_KATEGORI = Object.values(KATEGORI).map((k) => k.id);
 
-export default function PanelKanan({ onFasilitasClick, selectedId }) {
+export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChange }) {
   const [aktifFilter, setAktifFilter] = useState(SEMUA_KATEGORI);
-  const [tab, setTab] = useState('fasilitas'); // 'fasilitas' | 'legenda'
+  const [tab, setTab] = useState('fasilitas');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // ← Notify parent setiap aktifFilter berubah, bukan saat render
+  useEffect(() => {
+    onFilterChange?.(aktifFilter);
+  }, [aktifFilter]);
 
   const toggleFilter = (kategoriId) => {
     setAktifFilter((prev) =>
@@ -20,6 +26,15 @@ export default function PanelKanan({ onFasilitasClick, selectedId }) {
         ? prev.filter((id) => id !== kategoriId)
         : [...prev, kategoriId]
     );
+  };
+
+  const handleReset = () => {
+    setAktifFilter(SEMUA_KATEGORI);
+  };
+
+  const handleSearch = (val) => {
+    setSearchQuery(val);
+    if (val && tab !== 'fasilitas') setTab('fasilitas');
   };
 
   return (
@@ -33,6 +48,9 @@ export default function PanelKanan({ onFasilitasClick, selectedId }) {
         </div>
         <p className="text-xs text-gray-400">Kec. Bener, Kab. Purworejo, Jawa Tengah</p>
         <p className="text-xs text-gray-300 mt-0.5">SIGAP — Sistem Informasi Geografis</p>
+        <div className="mt-3">
+          <SearchBar value={searchQuery} onChange={handleSearch} />
+        </div>
       </div>
 
       {/* Tab Switch */}
@@ -59,6 +77,14 @@ export default function PanelKanan({ onFasilitasClick, selectedId }) {
           <Map size={13} />
           Legenda
         </button>
+
+        {searchQuery && (
+          <div className="ml-auto flex items-center">
+            <span className="text-xs text-green-600 font-semibold bg-green-50 px-2 py-0.5 rounded-full">
+              {searchQuery}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Konten Tab */}
@@ -68,6 +94,7 @@ export default function PanelKanan({ onFasilitasClick, selectedId }) {
             aktifFilter={aktifFilter}
             onFasilitasClick={onFasilitasClick}
             selectedId={selectedId}
+            searchQuery={searchQuery}
           />
         ) : (
           <div className="flex flex-col gap-2">
@@ -78,9 +105,8 @@ export default function PanelKanan({ onFasilitasClick, selectedId }) {
               aktifFilter={aktifFilter}
               onToggleFilter={toggleFilter}
             />
-            {/* Tombol reset filter */}
             <button
-              onClick={() => setAktifFilter(SEMUA_KATEGORI)}
+              onClick={handleReset}
               className="mt-2 w-full py-2 rounded-xl text-xs font-semibold text-green-600 bg-green-50 hover:bg-green-100 transition-colors"
             >
               Tampilkan Semua
