@@ -41,3 +41,8 @@ body {
 .sigap-popup .leaflet-popup-tip {
   background: white;
 }
+
+/* Smooth transition panel kanan */
+.panel-transition {
+  transition: width 300ms ease, opacity 300ms ease;
+}

@@ -6,6 +6,7 @@ import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import { MAP_CONFIG } from '@/data/mapConfig';
 import FasilitasLayer from './FasilitasLayer';
 import FlyToHandler from './FlyToHandler';
+import LokasiMarker from './LokasiMarker';
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -23,7 +24,7 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail, flyToTarget }) {
+export default function MapView({ onLihatDetail, flyToTarget, posisiUser }) {
   return (
     <MapContainer
       center={MAP_CONFIG.center}
@@ -40,6 +41,7 @@ export default function MapView({ onLihatDetail, flyToTarget }) {
       <SetInitialView />
       <FasilitasLayer onLihatDetail={onLihatDetail} />
       <FlyToHandler target={flyToTarget} />
+      <LokasiMarker posisi={posisiUser} />
     </MapContainer>
   );
 }
