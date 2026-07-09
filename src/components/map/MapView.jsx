@@ -7,6 +7,10 @@ import { MAP_CONFIG } from '@/data/mapConfig';
 import FasilitasLayer from './FasilitasLayer';
 import FlyToHandler from './FlyToHandler';
 import LokasiMarker from './LokasiMarker';
+import DesaMask from './DesaMask';
+import GarisBatas from './GarisBatas';
+import LapisanJalan from './LapisanJalan';
+import LapisanSungai from './LapisanSungai';
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -24,7 +28,7 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail, flyToTarget, posisiUser,aktifFilter  }) {
+export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter }) {
   return (
     <MapContainer
       center={MAP_CONFIG.center}
@@ -38,8 +42,18 @@ export default function MapView({ onLihatDetail, flyToTarget, posisiUser,aktifFi
         url={MAP_CONFIG.tileUrl}
         attribution={MAP_CONFIG.tileAttribution}
       />
+      <TileLayer
+        url={MAP_CONFIG.labelUrl}
+        opacity={0.8}
+      />
       <SetInitialView />
-      <FasilitasLayer onLihatDetail={onLihatDetail} aktifFilter={aktifFilter} />  
+
+      {/* Urutan layer penting — bawah ke atas */}
+      <DesaMask />
+      <LapisanSungai />   {/* ← sungai di bawah jalan */}
+      <LapisanJalan />    {/* ← jalan di atas sungai */}
+      <GarisBatas />      {/* ← batas desa paling atas */}
+      <FasilitasLayer onLihatDetail={onLihatDetail} aktifFilter={aktifFilter} />
       <FlyToHandler target={flyToTarget} />
       <LokasiMarker posisi={posisiUser} />
     </MapContainer>

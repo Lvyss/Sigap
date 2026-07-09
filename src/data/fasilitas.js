@@ -1,235 +1,160 @@
 // src/data/fasilitas.js
 
 export const KATEGORI = {
-  PEMERINTAHAN: {
-    id: 'pemerintahan',
-    label: 'Pemerintahan',
-    warna: '#1D4ED8',   // biru tua
+  UMKM: {
+    id: 'umkm',
+    label: 'Potensi UMKM',
+    warna: '#F59E0B',
+    icon: 'store',
+  },
+  PANTAI: {
+    id: 'pantai',
+    label: 'Potensi Pantai',
+    warna: '#06B6D4',
+    icon: 'waves',
+  },
+  FASILITAS: {
+    id: 'fasilitas',
+    label: 'Fasilitas Umum',
+    warna: '#1D4ED8',
     icon: 'building-2',
   },
-  PENDIDIKAN: {
-    id: 'pendidikan',
-    label: 'Pendidikan',
-    warna: '#F59E0B',   // kuning
-    icon: 'graduation-cap',
+  BUDAYA: {
+    id: 'budaya',
+    label: 'Budaya & Kearifan Lokal',
+    warna: '#92400E',
+    icon: 'landmark',
   },
-  IBADAH: {
-    id: 'ibadah',
-    label: 'Tempat Ibadah',
-    warna: '#10B981',   // hijau
-    icon: 'mosque',
-  },
-  WISATA: {
-    id: 'wisata',
-    label: 'Wisata',
-    warna: '#06B6D4',   // cyan
+  SDA: {
+    id: 'sda',
+    label: 'Potensi SDA',
+    warna: '#10B981',
     icon: 'tree-pine',
-  },
-  PEMAKAMAN: {
-    id: 'pemakaman',
-    label: 'Pemakaman',
-    warna: '#6B7280',   // abu
-    icon: 'cross',
-  },
-  PETERNAKAN: {
-    id: 'peternakan',
-    label: 'Peternakan',
-    warna: '#F97316',   // oranye
-    icon: 'beef',
-  },
-  INFRASTRUKTUR: {
-    id: 'infrastruktur',
-    label: 'Infrastruktur',
-    warna: '#8B5CF6',   // ungu
-    icon: 'wrench',
-  },
-  EKONOMI: {
-    id: 'ekonomi',
-    label: 'Ekonomi',
-    warna: '#EC4899',   // pink
-    icon: 'store',
   },
 };
 
 export const fasilitas = [
 
-  // ─── PEMERINTAHAN ───────────────────────────────────────
+  // ─── FASILITAS UMUM ─────────────────────────────────────
   {
     id: 1,
-    nama: 'Balai Desa Sidomukti',
-    kategori: 'pemerintahan',
-    koordinat: [-7.5621, 110.2187],
-    deskripsi: 'Pusat pemerintahan Desa Sidomukti, tempat pelayanan administrasi warga dan kegiatan desa.',
+    nama: 'Pemandian Umum Plandaan',
+    kategori: 'fasilitas',
+    koordinat: [-8.246040, 111.909295],
+    deskripsi: 'Tempat pemandian umum yang sering digunakan warga sekitar terutama saat mati air. Berlokasi di Dusun Plandaan.',
     foto: ['images/1.png'],
-    infoSingkat: 'Pusat administrasi desa',
+    infoSingkat: 'Pemandian umum warga Dusun Plandaan',
+    dusun: 'Plandaan',
+    tanggalSurvei: '27 Juni 2026',
+    surveyor: 'Fatimah Azzahro & Rindi Puspita Sari',
   },
   {
     id: 2,
-    nama: 'Gapura Sidomukti',
-    kategori: 'pemerintahan',
-    koordinat: [-7.5598, 110.2201],
-    deskripsi: 'Gapura selamat datang pintu masuk utama Desa Sidomukti.',
+    nama: 'Sumber PDAM',
+    kategori: 'fasilitas',
+    koordinat: [-8.268993, 111.898221],
+    deskripsi: 'Sumber air PDAM yang melayani 2 dusun yaitu Dusun Sumber dan Dusun Jengglung. Berlokasi di Dusun Sumber.',
     foto: ['images/1.png'],
-    infoSingkat: 'Pintu masuk utama desa',
+    infoSingkat: 'Sumber air PDAM 2 dusun',
+    dusun: 'Sumber',
+    tanggalSurvei: '27 Juni 2026',
+    surveyor: 'Fatimah Azzahro & Rindi Puspita Sari',
   },
-
-  // ─── PENDIDIKAN ─────────────────────────────────────────
   {
     id: 3,
-    nama: 'SDN 1 Sidomukti',
-    kategori: 'pendidikan',
-    koordinat: [-7.5635, 110.2175],
-    deskripsi: 'Sekolah Dasar Negeri 1 Sidomukti, melayani pendidikan dasar warga desa.',
+    nama: 'Pemandian Umum Sumur Bor',
+    kategori: 'fasilitas',
+    koordinat: [-8.244250, 111.902231],
+    deskripsi: 'Pemandian umum dengan sumur bor yang disumbangkan oleh Yayasan Yesus Kristus untuk warga Dusun Plandaan.',
     foto: ['images/1.png'],
-    infoSingkat: 'Sekolah Dasar Negeri',
+    infoSingkat: 'Pemandian sumur bor, sumbangan yayasan',
+    dusun: 'Plandaan',
+    tanggalSurvei: '27 Juni 2026',
+    surveyor: 'Fatimah Azzahro & Rindi Puspita Sari',
   },
+
+  // ─── POTENSI PANTAI ─────────────────────────────────────
   {
     id: 4,
-    nama: 'MTS Sidomukti',
-    kategori: 'pendidikan',
-    koordinat: [-7.5648, 110.2163],
-    deskripsi: 'Madrasah Tsanawiyah Sidomukti, jenjang pendidikan setingkat SMP berbasis Islam.',
+    nama: 'Pantai Sanggar',
+    kategori: 'pantai',
+    koordinat: [-8.297525, 111.910153],
+    deskripsi: 'Pantai indah dengan pasir putih lembut dan air jernih, berlokasi di Dusun Ngelo. Salah satu destinasi wisata unggulan desa.',
     foto: ['images/1.png'],
-    infoSingkat: 'Madrasah Tsanawiyah (setara SMP)',
+    infoSingkat: 'Pantai pasir putih, air jernih',
+    dusun: 'Ngelo',
+    tanggalSurvei: '2 Juli 2026',
+    surveyor: 'Rindi Puspita, Fatimah Azzahro, Ima Artha Gultom & Eka Nanda',
   },
   {
     id: 5,
-    nama: 'TK Setia Bumi Desa Sidomukti',
-    kategori: 'pendidikan',
-    koordinat: [-7.5612, 110.2193],
-    deskripsi: 'Taman Kanak-Kanak Setia Bumi, layanan pendidikan anak usia dini di Desa Sidomukti.',
+    nama: 'Pantai Patuk Gebang',
+    kategori: 'pantai',
+    koordinat: [-8.301403, 111.902059],
+    deskripsi: 'Pantai indah dengan pasir putih lembut dan air jernih, berlokasi di Dusun Ngelo.',
     foto: ['images/1.png'],
-    infoSingkat: 'Taman Kanak-Kanak',
+    infoSingkat: 'Pantai pasir putih, pemandangan indah',
+    dusun: 'Ngelo',
+    tanggalSurvei: '2 Juli 2026',
+    surveyor: 'Rindi Puspita, Fatimah Azzahro, Ima Artha Gultom & Eka Nanda',
   },
-  {
+    {
     id: 6,
-    nama: 'TPQ Desa Sidomukti',
-    kategori: 'pendidikan',
-    koordinat: [-7.5659, 110.2179],
-    deskripsi: 'Taman Pendidikan Al-Quran Desa Sidomukti, tempat belajar mengaji untuk anak-anak.',
+    nama: 'Pantai Ngalur',
+    kategori: 'pantai',
+    koordinat: [-8.297525, 111.916303],
+    deskripsi: 'Pantai indah yang tersembunyi di antara tebing tinggi, menyajikan view yang menyegarkan mata. Berlokasi di Dusun Ngelo.',
     foto: ['images/1.png'],
-    infoSingkat: 'Taman Pendidikan Al-Quran',
+    infoSingkat: 'Pantai tersembunyi di antara tebing',
+    dusun: 'Ngelo',
+    tanggalSurvei: '2 Juli 2026',
+    surveyor: 'Rindi Puspita, Fatimah Azzahro, Ima Artha Gultom & Eka Nanda',
   },
 
-  // ─── TEMPAT IBADAH ──────────────────────────────────────
+  // ─── POTENSI SDA ────────────────────────────────────────
+
   {
     id: 7,
-    nama: 'Masjid Al-Mahsyuri',
-    kategori: 'ibadah',
-    koordinat: [-7.5627, 110.2168],
-    deskripsi: 'Masjid utama Desa Sidomukti, pusat kegiatan keagamaan dan sosial warga.',
+    nama: 'Kebun Pisang',
+    kategori: 'sda',
+    koordinat: [-8.285198, 111.925261],
+    deskripsi: 'Kebun pisang yang berada di Dusun Ngelo. Pisang menjadi salah satu komoditas dominan di Desa Jengglungharjo.',
     foto: ['images/1.png'],
-    infoSingkat: 'Masjid utama desa',
+    infoSingkat: 'Komoditas pisang dominan desa',
+    dusun: 'Ngelo',
+    tanggalSurvei: '6 Juli 2026',
+    surveyor: 'Rindi Puspita, Fatimah Azzahro & Ima Artha Gultom',
   },
-
-  // ─── WISATA ─────────────────────────────────────────────
   {
     id: 8,
-    nama: 'Cibion Park',
-    kategori: 'wisata',
-    koordinat: [-7.5671, 110.2204],
-    deskripsi: 'Destinasi wisata kolam renang dan taman rekreasi keluarga di Desa Sidomukti.',
+    nama: 'Kebun Alpukat',
+    kategori: 'sda',
+    koordinat: [-8.284869, 111.928465],
+    deskripsi: 'Alpukat menjadi komoditas kedua terbesar bagi masyarakat Desa Jengglungharjo. Berlokasi di Dusun Ngelo.',
     foto: ['images/1.png'],
-    infoSingkat: 'Wisata kolam & taman rekreasi',
+    infoSingkat: 'Komoditas alpukat terbesar kedua',
+    dusun: 'Ngelo',
+    tanggalSurvei: '6 Juli 2026',
+    surveyor: 'Rindi Puspita, Fatimah Azzahro & Ima Artha Gultom',
   },
-
-  // ─── PEMAKAMAN ──────────────────────────────────────────
   {
     id: 9,
-    nama: 'Makam RW 1',
-    kategori: 'pemakaman',
-    koordinat: [-7.5608, 110.2158],
-    deskripsi: 'Area pemakaman umum warga RW 1 Desa Sidomukti.',
+    nama: 'Kebun Karet',
+    kategori: 'sda',
+    koordinat: [-8.293250, 111.927000],
+    deskripsi: 'Komoditas terbesar ketiga desa. Kebun karet sangat cocok untuk penghijauan hutan lindung karena pohonnya mampu menahan erosi, menjaga cadangan air, sekaligus bernilai ekonomi tinggi.',
     foto: ['images/1.png'],
-    infoSingkat: 'Pemakaman umum RW 1',
-  },
-  {
-    id: 10,
-    nama: 'Makam RW 2',
-    kategori: 'pemakaman',
-    koordinat: [-7.5643, 110.2215],
-    deskripsi: 'Area pemakaman umum warga RW 2 Desa Sidomukti.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Pemakaman umum RW 2',
+    infoSingkat: 'Komoditas karet, bernilai ekonomi tinggi',
+    dusun: 'Ngelo',
+    tanggalSurvei: '6 Juli 2026',
+    surveyor: 'Rindi Puspita, Fatimah Azzahro & Ima Artha Gultom',
   },
 
-  // ─── PETERNAKAN ─────────────────────────────────────────
-  {
-    id: 11,
-    nama: 'Peternakan Bebek',
-    kategori: 'peternakan',
-    koordinat: [-7.5683, 110.2171],
-    deskripsi: 'Sentra peternakan bebek milik warga Desa Sidomukti.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Peternakan bebek warga',
-  },
-  {
-    id: 12,
-    nama: 'Peternakan Ayam',
-    kategori: 'peternakan',
-    koordinat: [-7.5595, 110.2219],
-    deskripsi: 'Sentra peternakan ayam milik warga Desa Sidomukti.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Peternakan ayam warga',
-  },
-  {
-    id: 13,
-    nama: 'Kandang PBH Jamal',
-    kategori: 'peternakan',
-    koordinat: [-7.5667, 110.2196],
-    deskripsi: 'Kandang pemeliharaan hewan milik Pak Jamal, salah satu sentra peternakan desa.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Kandang peternakan hewan',
-  },
-  {
-    id: 14,
-    nama: 'Kelompok Tani',
-    kategori: 'peternakan',
-    koordinat: [-7.5656, 110.2209],
-    deskripsi: 'Lokasi kegiatan Kelompok Tani Desa Sidomukti, pusat koordinasi pertanian dan peternakan warga.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Pusat kegiatan kelompok tani',
-  },
+  // ─── POTENSI UMKM ───────────────────────────────────────
+  // 🚧 Data belum tersedia — tunggu hasil survei lapangan
 
-  // ─── INFRASTRUKTUR ──────────────────────────────────────
-  {
-    id: 15,
-    nama: 'Pam Simas',
-    kategori: 'infrastruktur',
-    koordinat: [-7.5616, 110.2181],
-    deskripsi: 'Instalasi Penyediaan Air Minum Siap Saji (SIMAS) untuk warga Desa Sidomukti.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Instalasi air minum warga',
-  },
-  {
-    id: 16,
-    nama: 'Perhutani',
-    kategori: 'infrastruktur',
-    koordinat: [-7.5589, 110.2162],
-    deskripsi: 'Area kelola Perum Perhutani yang berbatasan dengan wilayah Desa Sidomukti.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Area kelola Perhutani',
-  },
-  {
-    id: 17,
-    nama: 'Lapangan Voli',
-    kategori: 'infrastruktur',
-    koordinat: [-7.5633, 110.2197],
-    deskripsi: 'Lapangan voli desa, sarana olahraga dan aktivitas warga Sidomukti.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Lapangan olahraga voli',
-  },
-
-  // ─── EKONOMI ────────────────────────────────────────────
-  {
-    id: 18,
-    nama: 'Koperasi Mersih Putih Sidomukti',
-    kategori: 'ekonomi',
-    koordinat: [-7.5641, 110.2188],
-    deskripsi: 'Koperasi milik warga Desa Sidomukti, bergerak di bidang simpan pinjam dan usaha bersama.',
-    foto: ['images/1.png'],
-    infoSingkat: 'Koperasi simpan pinjam desa',
-  },
+  // ─── BUDAYA & KEARIFAN LOKAL ────────────────────────────
+  // 🚧 Data belum tersedia — tunggu hasil survei lapangan
 
 ];
 

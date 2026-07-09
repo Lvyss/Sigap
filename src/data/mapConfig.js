@@ -1,18 +1,15 @@
 // src/data/mapConfig.js
 
 export const MAP_CONFIG = {
-  // Koordinat tengah Desa Sidomukti
-  center: [-7.5635, 110.2185],
-
-  // Zoom default saat pertama buka
+  center: [-8.2390636,111.8936623],
   defaultZoom: 15,
-
-  // Batas zoom
   minZoom: 13,
-  maxZoom: 19,
+  maxZoom: 18,
 
-  // Tile layer OSM
-  tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  tileAttribution:
-    '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | SIGAP KKN Sidomukti 2026',
+  // Satelit Esri — gratis, no API key, Google Earth look
+  tileUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  tileAttribution: 'Tiles © Esri — Esri, DigitalGlobe, GeoEye, i-cubed, USDA FSA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo',
+
+  // Label jalan di atas satelit (opsional tapi bagus)
+  labelUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
 };
