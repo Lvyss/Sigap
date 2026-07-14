@@ -1,6 +1,7 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  reactStrictMode: false, // ← matiin ini
 };
 
 export default nextConfig;

@@ -17,6 +17,14 @@ export default function Home() {
   const [posisiUser, setPosisiUser] = useState(null);
   const [errorLokasi, setErrorLokasi] = useState(null);
   const [aktifFilter, setAktifFilter] = useState(null);
+  const [mapZoom, setMapZoom] = useState(15);
+const [mapLat, setMapLat] = useState(-8.26);
+
+
+const handleZoomChange = (zoom, lat) => {
+  setMapZoom(zoom);
+  if (lat) setMapLat(lat);
+};
 
   const handleFasilitasClick = (fasilitas) => {
     setFlyToTarget(fasilitas);
@@ -25,7 +33,7 @@ export default function Home() {
 
   const handleLokasi = () => {
     if (!navigator.geolocation) {
-      setErrorLokasi('Browser kamu tidak mendukung fitur lokasi.');
+      setErrorLokasi('Browser tidak mendukung fitur lokasi.');
       return;
     }
     setLoadingLokasi(true);
@@ -42,17 +50,10 @@ export default function Home() {
       (err) => {
         setLoadingLokasi(false);
         switch (err.code) {
-          case err.PERMISSION_DENIED:
-            setErrorLokasi('Izin lokasi ditolak.');
-            break;
-          case err.POSITION_UNAVAILABLE:
-            setErrorLokasi('Lokasi tidak tersedia.');
-            break;
-          case err.TIMEOUT:
-            setErrorLokasi('Timeout. Coba lagi.');
-            break;
-          default:
-            setErrorLokasi('Gagal mendapatkan lokasi.');
+          case err.PERMISSION_DENIED: setErrorLokasi('Izin lokasi ditolak.'); break;
+          case err.POSITION_UNAVAILABLE: setErrorLokasi('Lokasi tidak tersedia.'); break;
+          case err.TIMEOUT: setErrorLokasi('Timeout. Coba lagi.'); break;
+          default: setErrorLokasi('Gagal mendapatkan lokasi.');
         }
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
@@ -60,48 +61,96 @@ export default function Home() {
   };
 
   return (
-    <main className="w-screen h-screen flex overflow-hidden">
+    <div className="w-screen h-screen flex flex-col overflow-hidden bg-white">
 
-      {/* KIRI: Peta — 2/3 layar */}
-      <div className="flex-1 h-full relative">
-        <MapWrapper
-          onLihatDetail={setSelectedFasilitas}
-          flyToTarget={flyToTarget}
-          posisiUser={posisiUser}
-          aktifFilter={aktifFilter}
-        />
-        <TombolFullscreen
-          isFullscreen={isFullscreen}
-          onToggle={() => setIsFullscreen((p) => !p)}
-        />
-        <TombolLokasi onLokasi={handleLokasi} loading={loadingLokasi} />
+      {/* ── HEADER ATAS — full width ── */}
+<div className="flex-shrink-0 border-b-2 border-black bg-white">
+  <div className="relative flex items-center justify-center px-6 py-2">
 
-        {errorLokasi && (
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] bg-red-500 text-white text-xs font-medium px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2">
-            <span>⚠️</span>
-            <span>{errorLokasi}</span>
-            <button onClick={() => setErrorLokasi(null)} className="ml-2 text-white/70 hover:text-white font-bold">✕</button>
-          </div>
-        )}
-      </div>
-
-      {/* KANAN: Panel — 1/3 layar */}
-      <div
-        className={`h-full flex-shrink-0 overflow-hidden transition-all duration-300 ${
-          isFullscreen ? 'w-0' : 'w-1/3'
-        }`}
+    {/* Judul — center murni karena parent pakai justify-center */}
+    <div className="flex flex-col items-center">
+      <h1
+        className="text-base font-medium text-black uppercase tracking-widest leading-tight text-center"
+        style={{ fontFamily: "'Oswald', sans-serif" }}
       >
-        <div
-          className={`h-full w-full transition-transform duration-300 ${
-            isFullscreen ? 'translate-x-full' : 'translate-x-0'
-          }`}
-        >
-          <PanelKanan
-            onFasilitasClick={handleFasilitasClick}
-            selectedId={selectedId}
-            onFilterChange={setAktifFilter}
+        Peta Potensi Desa Jengglungharjo
+      </h1>
+      <p
+        className="text-base font-medium text-black uppercase tracking-wide text-center"
+        style={{ fontFamily: "'Oswald', sans-serif" }}
+      >
+        Kecamatan Tanggunggunung, Kabupaten Tulungagung
+      </p>
+      <p
+        className="text-base font-medium text-black uppercase tracking-wide text-center"
+        style={{ fontFamily: "'Oswald', sans-serif" }}
+      >
+        Provinsi Jawa Timur
+      </p>
+    </div>
+
+    {/* Logo — absolute, geser pakai right-* dan pr-* */}
+    <div className="absolute right-40">
+      {/* ↑ ganti right-10 untuk geser kiri/kanan
+          right-0  = paling kanan
+          right-10 = geser kiri sedikit
+          right-20 = geser kiri lebih jauh */}
+      <img
+        src="/images/Logo Kab.png"
+        alt="Logo"
+        className="w-16 h-16 object-contain"
+        onError={(e) => { e.target.style.display = 'none'; }}
+      />
+    </div>
+
+  </div>
+</div>
+
+      {/* ── BODY: Peta + Panel ── */}
+      <div className="flex flex-1 overflow-hidden">
+
+        {/* KIRI: Peta — 2/3 */}
+        <div className="flex-1 h-full relative" style={{ width: '66.666%' }}>
+<MapWrapper
+  onLihatDetail={setSelectedFasilitas}
+  flyToTarget={flyToTarget}
+  posisiUser={posisiUser}
+  aktifFilter={aktifFilter}
+  onZoomChange={handleZoomChange}
+/>
+          <TombolFullscreen
+            isFullscreen={isFullscreen}
+            onToggle={() => setIsFullscreen((p) => !p)}
           />
+          <TombolLokasi onLokasi={handleLokasi} loading={loadingLokasi} />
+
+          {errorLokasi && (
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] bg-red-500 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2">
+              <span>⚠️</span>
+              <span>{errorLokasi}</span>
+              <button onClick={() => setErrorLokasi(null)} className="ml-2 font-bold">✕</button>
+            </div>
+          )}
         </div>
+
+{/* KANAN: Panel — ganti w-1/3 → w-1/5 di sini */}
+<div
+  className={`h-full flex-shrink-0 overflow-hidden transition-all duration-300 border-l-2 border-black ${
+    isFullscreen ? 'w-0' : 'w-3/10'  // ← SINI
+  }`}
+>
+  <div className={`h-full w-full transition-transform duration-300 ${
+    isFullscreen ? 'translate-x-full' : 'translate-x-0'
+  }`}>
+<PanelKanan
+  onFasilitasClick={handleFasilitasClick}
+  selectedId={selectedId}
+  onFilterChange={setAktifFilter}
+  mapZoom={mapZoom}
+  mapLat={mapLat}
+/>
+  </div>
+</div>
       </div>
 
       {selectedFasilitas && (
@@ -111,6 +160,6 @@ export default function Home() {
         />
       )}
 
-    </main>
+    </div>
   );
 }

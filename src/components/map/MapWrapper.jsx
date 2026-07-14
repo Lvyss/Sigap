@@ -15,13 +15,14 @@ const MapView = dynamic(() => import('./MapView'), {
   ),
 });
 
-export default function MapWrapper({ onLihatDetail, flyToTarget, posisiUser, aktifFilter }) {
+export default function MapWrapper({ onLihatDetail, flyToTarget, posisiUser, aktifFilter, onZoomChange }) {
   return (
     <MapView
       onLihatDetail={onLihatDetail}
       flyToTarget={flyToTarget}
       posisiUser={posisiUser}
       aktifFilter={aktifFilter}
+      onZoomChange={onZoomChange}
     />
   );
 }

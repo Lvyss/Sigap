@@ -21,7 +21,7 @@ export default function GarisBatas() {
       key="garis-batas"
       data={geoData}
       style={{
-        color: '#FFFFFF',
+        color: '#000000',
         weight: 2.5,
         dashArray: '6 4',
         fillOpacity: 0,

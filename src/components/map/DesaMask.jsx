@@ -70,8 +70,8 @@ export default function DesaMask() {
       key="desa-mask"
       data={maskData}
       style={{
-        fillColor: '#1a1a2e',
-        fillOpacity: 0.55,
+        fillColor: '#ffffff',
+        fillOpacity: 0.5,
         color: 'transparent',
         weight: 0,
       }}

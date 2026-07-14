@@ -11,6 +11,7 @@ import DesaMask from './DesaMask';
 import GarisBatas from './GarisBatas';
 import LapisanJalan from './LapisanJalan';
 import LapisanSungai from './LapisanSungai';
+import ZoomWatcher from './ZoomWatcher';
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -28,7 +29,8 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter }) {
+export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter, onZoomChange }) {
+
   return (
     <MapContainer
       center={MAP_CONFIG.center}
@@ -47,6 +49,7 @@ export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifF
         opacity={0.8}
       />
       <SetInitialView />
+       <ZoomWatcher onZoomChange={onZoomChange} />
 
       {/* Urutan layer penting — bawah ke atas */}
       <DesaMask />
