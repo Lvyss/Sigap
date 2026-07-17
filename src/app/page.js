@@ -2,22 +2,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
 import MapWrapper from '@/components/map/MapWrapper';
 import ModalDetail from '@/components/ui/ModalDetail';
 import PanelKanan from '@/components/panel/PanelKanan';
+import BottomSheet from '@/components/panel/BottomSheet';
 import TombolFullscreen from '@/components/map/TombolFullscreen';
 import TombolLokasi from '@/components/map/TombolLokasi';
-import { X } from 'lucide-react'; // ← tambah ini
+import useIsMobile from '@/hooks/useIsMobile';
 
 export default function Home() {
+  const isMobile = useIsMobile();
+
   const [selectedFasilitas, setSelectedFasilitas] = useState(null);
-    const [showMapHint, setShowMapHint] = useState(true);
-
-    useEffect(() => {
-  const timer = setTimeout(() => setShowMapHint(false), 4000);
-  return () => clearTimeout(timer);
-}, []);
-
+  const [showMapHint, setShowMapHint] = useState(true);
   const [flyToTarget, setFlyToTarget] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -28,6 +26,10 @@ export default function Home() {
   const [mapZoom, setMapZoom] = useState(14);
   const [mapLat, setMapLat] = useState(-8.26);
 
+  useEffect(() => {
+    const timer = setTimeout(() => setShowMapHint(false), 4000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleFasilitasClick = (fasilitas) => {
     setFlyToTarget(fasilitas);
@@ -40,19 +42,12 @@ export default function Home() {
   };
 
   const handleLokasi = () => {
-    if (!navigator.geolocation) {
-      setErrorLokasi('Browser tidak mendukung fitur lokasi.');
-      return;
-    }
+    if (!navigator.geolocation) { setErrorLokasi('Browser tidak mendukung fitur lokasi.'); return; }
     setLoadingLokasi(true);
     setErrorLokasi(null);
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setPosisiUser({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-          akurasi: position.coords.accuracy,
-        });
+      (pos) => {
+        setPosisiUser({ lat: pos.coords.latitude, lng: pos.coords.longitude, akurasi: pos.coords.accuracy });
         setLoadingLokasi(false);
       },
       (err) => {
@@ -68,26 +63,10 @@ export default function Home() {
     );
   };
 
-
-
   return (
     <div className="w-screen h-screen flex flex-col overflow-hidden bg-white">
 
-{showMapHint && (
-  <div
-    className="absolute bottom-16 left-1/2 -translate-x-1/2 z-[1000]
-      bg-black/75 text-white text-[11px] px-3 py-2 rounded-xl
-      flex items-center gap-2 cursor-pointer whitespace-nowrap
-      animate-bounce"
-    onClick={() => setShowMapHint(false)}
-  >
-    <span>📍</span>
-    <span>Klik marker untuk melihat info potensi</span>
-    <X size={11} />
-  </div>
-)}
-
-      {/* ── HEADER — animasi slide up saat fullscreen ── */}
+      {/* ── HEADER ── */}
       <div
         className="flex-shrink-0 border-b-2 border-black bg-white overflow-hidden transition-all duration-300 ease-in-out"
         style={{
@@ -96,32 +75,30 @@ export default function Home() {
           borderBottomWidth: isFullscreen ? '0px' : '2px',
         }}
       >
-        <div className="relative flex items-center justify-center px-6 py-2">
+        <div className="relative flex items-center justify-center px-4 py-2">
           <div className="flex flex-col items-center">
             <h1
-              className="text-base font-medium text-black uppercase tracking-widest leading-tight text-center"
+              className="text-sm font-medium text-black uppercase tracking-widest leading-tight text-center"
               style={{ fontFamily: "'Oswald', sans-serif" }}
             >
               Peta Potensi Desa Jengglungharjo
             </h1>
-            <p
-              className="text-sm font-medium text-black uppercase tracking-wide text-center"
-              style={{ fontFamily: "'Oswald', sans-serif" }}
-            >
-              Kecamatan Tanggunggunung, Kabupaten Tulungagung
-            </p>
-            <p
-              className="text-sm font-medium text-black uppercase tracking-wide text-center"
-              style={{ fontFamily: "'Oswald', sans-serif" }}
-            >
-              Provinsi Jawa Timur
-            </p>
+            {!isMobile && (
+              <>
+                <p className="text-xs font-medium text-black uppercase tracking-wide text-center" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                  Kecamatan Tanggunggunung, Kabupaten Tulungagung
+                </p>
+                <p className="text-xs font-medium text-black uppercase tracking-wide text-center" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                  Provinsi Jawa Timur
+                </p>
+              </>
+            )}
           </div>
-          <div className="absolute right-10">
+          <div className="absolute right-4">
             <img
               src="/images/Logo Kab.png"
               alt="Logo"
-              className="w-16 h-16 object-contain"
+              className={`object-contain ${isMobile ? 'w-10 h-10' : 'w-16 h-16'}`}
               onError={(e) => { e.target.style.display = 'none'; }}
             />
           </div>
@@ -129,9 +106,9 @@ export default function Home() {
       </div>
 
       {/* ── BODY ── */}
-      <div className="flex flex-1 overflow-hidden min-h-0">
+      <div className="flex flex-1 overflow-hidden min-h-0 relative">
 
-        {/* KIRI: Peta — selalu flex-1 */}
+        {/* PETA */}
         <div className="flex-1 h-full relative min-w-0">
           <MapWrapper
             onLihatDetail={setSelectedFasilitas}
@@ -139,16 +116,32 @@ export default function Home() {
             posisiUser={posisiUser}
             aktifFilter={aktifFilter}
             onZoomChange={handleZoomChange}
-             isFullscreen={isFullscreen}  // ← tambah ini
+            isFullscreen={isFullscreen}
           />
+
+          {/* Tombol GPS + Fullscreen */}
           <TombolFullscreen
             isFullscreen={isFullscreen}
             onToggle={() => setIsFullscreen((p) => !p)}
           />
           <TombolLokasi onLokasi={handleLokasi} loading={loadingLokasi} />
 
+          {/* Hint tooltip */}
+          {showMapHint && (
+            <div
+              className="absolute bottom-20 left-1/2 -translate-x-1/2 z-[1000]
+                bg-black/75 text-white text-[11px] px-3 py-2 rounded-xl
+                flex items-center gap-2 cursor-pointer whitespace-nowrap animate-bounce"
+              onClick={() => setShowMapHint(false)}
+            >
+              <span>📍</span>
+              <span>Klik marker untuk melihat info potensi</span>
+              <X size={11} />
+            </div>
+          )}
+
           {errorLokasi && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[1000] bg-red-500 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2">
+            <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-[1000] bg-red-500 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2">
               <span>⚠️</span>
               <span>{errorLokasi}</span>
               <button onClick={() => setErrorLokasi(null)} className="ml-2 font-bold">✕</button>
@@ -156,31 +149,43 @@ export default function Home() {
           )}
         </div>
 
-        {/* KANAN: Panel — animasi slide right saat fullscreen */}
-        <div
-          className="h-full flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out border-black"
-          style={{
-            width: isFullscreen ? '0px' : '33.333%',
-            opacity: isFullscreen ? 0 : 1,
-            borderLeftWidth: isFullscreen ? '0px' : '2px',
-          }}
-        >
+        {/* DESKTOP: Panel Kanan */}
+        {!isMobile && (
           <div
-            className="h-full transition-transform duration-300 ease-in-out"
+            className="h-full flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out border-black"
             style={{
-              width: '33.333vw',
-              transform: isFullscreen ? 'translateX(100%)' : 'translateX(0)',
+              width: isFullscreen ? '0px' : '33.333%',
+              opacity: isFullscreen ? 0 : 1,
+              borderLeftWidth: isFullscreen ? '0px' : '2px',
             }}
           >
-            <PanelKanan
-              onFasilitasClick={handleFasilitasClick}
-              selectedId={selectedId}
-              onFilterChange={setAktifFilter}
-              mapZoom={mapZoom}
-              mapLat={mapLat}
-            />
+            <div
+              className="h-full transition-transform duration-300 ease-in-out"
+              style={{
+                width: '33.333vw',
+                transform: isFullscreen ? 'translateX(100%)' : 'translateX(0)',
+              }}
+            >
+              <PanelKanan
+                onFasilitasClick={handleFasilitasClick}
+                selectedId={selectedId}
+                onFilterChange={setAktifFilter}
+                mapZoom={mapZoom}
+                mapLat={mapLat}
+              />
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* MOBILE: Bottom Sheet */}
+        {isMobile && (
+          <BottomSheet
+            onFasilitasClick={handleFasilitasClick}
+            selectedId={selectedId}
+            onFilterChange={setAktifFilter}
+          />
+        )}
+
       </div>
 
       {selectedFasilitas && (
@@ -189,6 +194,7 @@ export default function Home() {
           onClose={() => setSelectedFasilitas(null)}
         />
       )}
+
     </div>
   );
 }
