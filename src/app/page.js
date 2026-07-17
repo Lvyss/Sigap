@@ -1,15 +1,23 @@
 // src/app/page.js
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MapWrapper from '@/components/map/MapWrapper';
 import ModalDetail from '@/components/ui/ModalDetail';
 import PanelKanan from '@/components/panel/PanelKanan';
 import TombolFullscreen from '@/components/map/TombolFullscreen';
 import TombolLokasi from '@/components/map/TombolLokasi';
+import { X } from 'lucide-react'; // ← tambah ini
 
 export default function Home() {
   const [selectedFasilitas, setSelectedFasilitas] = useState(null);
+    const [showMapHint, setShowMapHint] = useState(true);
+
+    useEffect(() => {
+  const timer = setTimeout(() => setShowMapHint(false), 4000);
+  return () => clearTimeout(timer);
+}, []);
+
   const [flyToTarget, setFlyToTarget] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -17,18 +25,18 @@ export default function Home() {
   const [posisiUser, setPosisiUser] = useState(null);
   const [errorLokasi, setErrorLokasi] = useState(null);
   const [aktifFilter, setAktifFilter] = useState(null);
-  const [mapZoom, setMapZoom] = useState(15);
-const [mapLat, setMapLat] = useState(-8.26);
+  const [mapZoom, setMapZoom] = useState(14);
+  const [mapLat, setMapLat] = useState(-8.26);
 
-
-const handleZoomChange = (zoom, lat) => {
-  setMapZoom(zoom);
-  if (lat) setMapLat(lat);
-};
 
   const handleFasilitasClick = (fasilitas) => {
     setFlyToTarget(fasilitas);
     setSelectedId(fasilitas.id);
+  };
+
+  const handleZoomChange = (zoom, lat) => {
+    setMapZoom(zoom);
+    if (lat) setMapLat(lat);
   };
 
   const handleLokasi = () => {
@@ -60,64 +68,79 @@ const handleZoomChange = (zoom, lat) => {
     );
   };
 
+
+
   return (
     <div className="w-screen h-screen flex flex-col overflow-hidden bg-white">
 
-      {/* ── HEADER ATAS — full width ── */}
-<div className="flex-shrink-0 border-b-2 border-black bg-white">
-  <div className="relative flex items-center justify-center px-6 py-2">
-
-    {/* Judul — center murni karena parent pakai justify-center */}
-    <div className="flex flex-col items-center">
-      <h1
-        className="text-base font-medium text-black uppercase tracking-widest leading-tight text-center"
-        style={{ fontFamily: "'Oswald', sans-serif" }}
-      >
-        Peta Potensi Desa Jengglungharjo
-      </h1>
-      <p
-        className="text-base font-medium text-black uppercase tracking-wide text-center"
-        style={{ fontFamily: "'Oswald', sans-serif" }}
-      >
-        Kecamatan Tanggunggunung, Kabupaten Tulungagung
-      </p>
-      <p
-        className="text-base font-medium text-black uppercase tracking-wide text-center"
-        style={{ fontFamily: "'Oswald', sans-serif" }}
-      >
-        Provinsi Jawa Timur
-      </p>
-    </div>
-
-    {/* Logo — absolute, geser pakai right-* dan pr-* */}
-    <div className="absolute right-40">
-      {/* ↑ ganti right-10 untuk geser kiri/kanan
-          right-0  = paling kanan
-          right-10 = geser kiri sedikit
-          right-20 = geser kiri lebih jauh */}
-      <img
-        src="/images/Logo Kab.png"
-        alt="Logo"
-        className="w-16 h-16 object-contain"
-        onError={(e) => { e.target.style.display = 'none'; }}
-      />
-    </div>
-
+{showMapHint && (
+  <div
+    className="absolute bottom-16 left-1/2 -translate-x-1/2 z-[1000]
+      bg-black/75 text-white text-[11px] px-3 py-2 rounded-xl
+      flex items-center gap-2 cursor-pointer whitespace-nowrap
+      animate-bounce"
+    onClick={() => setShowMapHint(false)}
+  >
+    <span>📍</span>
+    <span>Klik marker untuk melihat info potensi</span>
+    <X size={11} />
   </div>
-</div>
+)}
 
-      {/* ── BODY: Peta + Panel ── */}
-      <div className="flex flex-1 overflow-hidden">
+      {/* ── HEADER — animasi slide up saat fullscreen ── */}
+      <div
+        className="flex-shrink-0 border-b-2 border-black bg-white overflow-hidden transition-all duration-300 ease-in-out"
+        style={{
+          maxHeight: isFullscreen ? '0px' : '80px',
+          opacity: isFullscreen ? 0 : 1,
+          borderBottomWidth: isFullscreen ? '0px' : '2px',
+        }}
+      >
+        <div className="relative flex items-center justify-center px-6 py-2">
+          <div className="flex flex-col items-center">
+            <h1
+              className="text-base font-medium text-black uppercase tracking-widest leading-tight text-center"
+              style={{ fontFamily: "'Oswald', sans-serif" }}
+            >
+              Peta Potensi Desa Jengglungharjo
+            </h1>
+            <p
+              className="text-sm font-medium text-black uppercase tracking-wide text-center"
+              style={{ fontFamily: "'Oswald', sans-serif" }}
+            >
+              Kecamatan Tanggunggunung, Kabupaten Tulungagung
+            </p>
+            <p
+              className="text-sm font-medium text-black uppercase tracking-wide text-center"
+              style={{ fontFamily: "'Oswald', sans-serif" }}
+            >
+              Provinsi Jawa Timur
+            </p>
+          </div>
+          <div className="absolute right-10">
+            <img
+              src="/images/Logo Kab.png"
+              alt="Logo"
+              className="w-16 h-16 object-contain"
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+          </div>
+        </div>
+      </div>
 
-        {/* KIRI: Peta — 2/3 */}
-        <div className="flex-1 h-full relative" style={{ width: '66.666%' }}>
-<MapWrapper
-  onLihatDetail={setSelectedFasilitas}
-  flyToTarget={flyToTarget}
-  posisiUser={posisiUser}
-  aktifFilter={aktifFilter}
-  onZoomChange={handleZoomChange}
-/>
+      {/* ── BODY ── */}
+      <div className="flex flex-1 overflow-hidden min-h-0">
+
+        {/* KIRI: Peta — selalu flex-1 */}
+        <div className="flex-1 h-full relative min-w-0">
+          <MapWrapper
+            onLihatDetail={setSelectedFasilitas}
+            flyToTarget={flyToTarget}
+            posisiUser={posisiUser}
+            aktifFilter={aktifFilter}
+            onZoomChange={handleZoomChange}
+             isFullscreen={isFullscreen}  // ← tambah ini
+          />
           <TombolFullscreen
             isFullscreen={isFullscreen}
             onToggle={() => setIsFullscreen((p) => !p)}
@@ -133,24 +156,31 @@ const handleZoomChange = (zoom, lat) => {
           )}
         </div>
 
-{/* KANAN: Panel — ganti w-1/3 → w-1/5 di sini */}
-<div
-  className={`h-full flex-shrink-0 overflow-hidden transition-all duration-300 border-l-2 border-black ${
-    isFullscreen ? 'w-0' : 'w-3/10'  // ← SINI
-  }`}
->
-  <div className={`h-full w-full transition-transform duration-300 ${
-    isFullscreen ? 'translate-x-full' : 'translate-x-0'
-  }`}>
-<PanelKanan
-  onFasilitasClick={handleFasilitasClick}
-  selectedId={selectedId}
-  onFilterChange={setAktifFilter}
-  mapZoom={mapZoom}
-  mapLat={mapLat}
-/>
-  </div>
-</div>
+        {/* KANAN: Panel — animasi slide right saat fullscreen */}
+        <div
+          className="h-full flex-shrink-0 overflow-hidden transition-all duration-300 ease-in-out border-black"
+          style={{
+            width: isFullscreen ? '0px' : '33.333%',
+            opacity: isFullscreen ? 0 : 1,
+            borderLeftWidth: isFullscreen ? '0px' : '2px',
+          }}
+        >
+          <div
+            className="h-full transition-transform duration-300 ease-in-out"
+            style={{
+              width: '33.333vw',
+              transform: isFullscreen ? 'translateX(100%)' : 'translateX(0)',
+            }}
+          >
+            <PanelKanan
+              onFasilitasClick={handleFasilitasClick}
+              selectedId={selectedId}
+              onFilterChange={setAktifFilter}
+              mapZoom={mapZoom}
+              mapLat={mapLat}
+            />
+          </div>
+        </div>
       </div>
 
       {selectedFasilitas && (
@@ -159,7 +189,6 @@ const handleZoomChange = (zoom, lat) => {
           onClose={() => setSelectedFasilitas(null)}
         />
       )}
-
     </div>
   );
 }

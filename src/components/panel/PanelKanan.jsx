@@ -11,6 +11,8 @@ const MiniMap = dynamic(() => import('./MiniMap'), { ssr: false });
 
 const SEMUA_KATEGORI = Object.values(KATEGORI).map((k) => k.id);
 
+
+
 const LEGENDA_GARIS = [
   { label: 'Batas Desa', style: { borderTop: '2px dashed #000' } },
   { label: 'Jalan', style: { borderTop: '2.5px solid #EF4444' } },
@@ -26,7 +28,8 @@ const formatSkala = (s) => {
 export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChange, mapZoom = 15, mapLat = -8.26 }) {
   const [aktifFilter, setAktifFilter] = useState(SEMUA_KATEGORI);
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [showHint, setShowHint] = useState(true);
+    
   useEffect(() => {
     onFilterChange?.(aktifFilter);
   }, [aktifFilter]);
@@ -190,35 +193,57 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
               style={{ backgroundColor: kat.warna }}
             />
             <p
-              className="text-[8px] font-bold text-black uppercase tracking-wide"
+              className="text-[10px] font-medium text-black uppercase tracking-wide"
               style={{ fontFamily: "'Oswald', sans-serif" }}
             >
               {kat.label}
             </p>
           </div>
 
+{showHint && (
+  <div
+    className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-2 py-1.5 mb-1.5 cursor-pointer"
+    onClick={() => setShowHint(false)}
+  >
+    <span className="text-blue-500 text-[10px]">👆</span>
+    <p className="text-[9px] text-blue-600 flex-1">
+      Klik item untuk melihat lokasi di peta
+    </p>
+    <X size={10} className="text-blue-400 flex-shrink-0" />
+  </div>
+)}
+
           {/* Grid 3 kolom — lebih padat */}
           <div className="grid grid-cols-2 gap-0.5">
-            {items.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => onFasilitasClick(item)}
-                className={`flex items-start gap-0.5 px-1 py-1 rounded border text-left transition-all hover:bg-gray-50 ${
-                  selectedId === item.id
-                    ? 'border-black bg-gray-100'
-                    : 'border-gray-200'
-                }`}
-              >
-                <MapPin
-                  size={7}
-                  className="flex-shrink-0 mt-0.5"
-                  style={{ color: kat.warna }}
-                />
-                <p className="text-[8px] text-black leading-tight line-clamp-2">
-                  {item.nama}
-                </p>
-              </button>
-            ))}
+{items.map((item) => (
+  <button
+    key={item.id}
+    onClick={() => onFasilitasClick(item)}
+    className={`group flex items-start gap-1 px-1.5 py-1.5 rounded border text-left
+      transition-all duration-150 cursor-pointer
+      hover:shadow-md hover:-translate-y-0.5
+      active:scale-95 active:shadow-none
+      ${selectedId === item.id
+        ? 'border-black bg-gray-100 shadow-sm'
+        : 'border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50'
+      }`}
+  >
+    <MapPin
+      size={9}
+      className="flex-shrink-0 mt-0.5 transition-transform group-hover:scale-125"
+      style={{ color: kat.warna }}
+    />
+    <div className="min-w-0 flex-1">
+      <p className="text-[9px] font-medium text-black leading-tight line-clamp-2 group-hover:underline">
+        {item.nama}
+      </p>
+    </div>
+    {/* Arrow — muncul saat hover */}
+    <span className="text-[8px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 self-center">
+      →
+    </span>
+  </button>
+))}
           </div>
 
         </div>
@@ -231,7 +256,7 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
 <div className="flex-shrink-0">
 
   {/* ── DIVIDER ── */}
-  <div className="mx-3 border-t border-black" />
+  <div className="border-t-2  border-black" />
 
   {/* ── SUMBER PETA ── */}
   <div className="px-4 py-1 flex-shrink-0">
@@ -249,7 +274,7 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
   </div>
 
   {/* ── DIVIDER ── */}
-  <div className="mx-3 border-t border-black" />
+  <div className="border-t-2  border-black" />
 
   {/* ── PETA INDEKS ── */}
   <div className="px-3 py-1">

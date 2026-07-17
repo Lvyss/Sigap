@@ -19,34 +19,45 @@ export default function FasilitasMarker({ fasilitas, onLihatDetail }) {
 
   return (
     <Marker position={fasilitas.koordinat} icon={icon}>
-      <Popup className="sigap-popup">
-        <div className="flex flex-col gap-1 min-w-[180px]">
+      <Popup className="sigap-popup" maxWidth={220} minWidth={220}>
+        <div className="flex flex-col w-full overflow-hidden rounded-xl">
 
-          {/* Header kategori */}
-          <div
-            className="flex items-center gap-2 px-3 py-2 rounded-t-md"
-            style={{ backgroundColor: kategoriData?.warna || '#6B7280' }}
-          >
-            <span className="text-white text-xs font-semibold uppercase tracking-wide">
-              {kategoriData?.label || 'Fasilitas'}
-            </span>
+          {/* Foto 1 */}
+          <div className="relative w-full h-28 bg-gray-100">
+            {fasilitas.foto1 ? (
+              <img
+                src={fasilitas.foto1}
+                alt={fasilitas.nama}
+                className="w-full h-full object-cover"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <span className="text-gray-400 text-xs">Foto belum tersedia</span>
+              </div>
+            )}
+
+            {/* Badge kategori */}
+            <div
+              className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-white text-[9px] font-semibold"
+              style={{ backgroundColor: kategoriData?.warna || '#6B7280' }}
+            >
+              {kategoriData?.label || 'Potensi'}
+            </div>
           </div>
 
-          {/* Isi popup */}
-          <div className="px-3 py-2">
-            <p className="font-bold text-gray-800 text-sm leading-tight">
+          {/* Nama */}
+          <div className="px-3 pt-2 pb-1">
+            <h3 className="text-xs font-bold text-gray-800 leading-tight">
               {fasilitas.nama}
-            </p>
-            <p className="text-gray-500 text-xs mt-1">
-              {fasilitas.infoSingkat}
-            </p>
+            </h3>
           </div>
 
-          {/* Tombol detail */}
-          <div className="px-3 pb-3">
+          {/* Tombol */}
+          <div className="px-3 pb-3 pt-1">
             <button
               onClick={() => onLihatDetail(fasilitas)}
-              className="w-full text-xs font-semibold text-white py-1.5 rounded-md transition-opacity hover:opacity-90"
+              className="w-full py-1.5 rounded-lg text-white text-[11px] font-semibold transition-opacity hover:opacity-90 flex items-center justify-center gap-1"
               style={{ backgroundColor: kategoriData?.warna || '#6B7280' }}
             >
               Lihat Detail →

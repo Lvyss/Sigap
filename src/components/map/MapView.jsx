@@ -12,6 +12,7 @@ import GarisBatas from './GarisBatas';
 import LapisanJalan from './LapisanJalan';
 import LapisanSungai from './LapisanSungai';
 import ZoomWatcher from './ZoomWatcher';
+import MapResizer from './MapResizer';
 
 import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
@@ -29,36 +30,30 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter, onZoomChange }) {
-
+export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter, onZoomChange, isFullscreen }) {
   return (
     <MapContainer
       center={MAP_CONFIG.center}
       zoom={MAP_CONFIG.defaultZoom}
       minZoom={MAP_CONFIG.minZoom}
       maxZoom={MAP_CONFIG.maxZoom}
+      maxBounds={MAP_CONFIG.maxBounds}
+      maxBoundsViscosity={MAP_CONFIG.maxBoundsViscosity}
       className="w-full h-full"
       zoomControl={true}
     >
-      <TileLayer
-        url={MAP_CONFIG.tileUrl}
-        attribution={MAP_CONFIG.tileAttribution}
-      />
-      <TileLayer
-        url={MAP_CONFIG.labelUrl}
-        opacity={0.8}
-      />
+      <TileLayer url={MAP_CONFIG.tileUrl} attribution={MAP_CONFIG.tileAttribution} />
+      <TileLayer url={MAP_CONFIG.labelUrl} opacity={0.8} />
       <SetInitialView />
-       <ZoomWatcher onZoomChange={onZoomChange} />
-
-      {/* Urutan layer penting — bawah ke atas */}
       <DesaMask />
-      <LapisanSungai />   {/* ← sungai di bawah jalan */}
-      <LapisanJalan />    {/* ← jalan di atas sungai */}
-      <GarisBatas />      {/* ← batas desa paling atas */}
+      <LapisanSungai />
+      <LapisanJalan />
+      <GarisBatas />
       <FasilitasLayer onLihatDetail={onLihatDetail} aktifFilter={aktifFilter} />
       <FlyToHandler target={flyToTarget} />
       <LokasiMarker posisi={posisiUser} />
+      <MapResizer isFullscreen={isFullscreen} />
+      <ZoomWatcher onZoomChange={onZoomChange} />
     </MapContainer>
   );
 }
