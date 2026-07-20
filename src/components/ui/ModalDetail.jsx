@@ -138,16 +138,35 @@ export default function ModalDetail({ fasilitas, onClose }) {
           </p>
         </div>
 
-        {/* ── FOOTER ── */}
-        <div className="px-5 py-3 border-t border-gray-100 flex-shrink-0">
-          <button
-            onClick={onClose}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ backgroundColor: kategoriData?.warna || '#6B7280' }}
-          >
-            Tutup
-          </button>
-        </div>
+{/* ── FOOTER ── */}
+<div className="px-5 py-3 border-t border-gray-100 flex-shrink-0 flex gap-2">
+
+  {/* Navigasi */}
+  <button
+    onClick={() => {
+      const [lat, lng] = fasilitas.koordinat;
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+      window.open(url, '_blank');
+    }}
+    className="flex-1 py-2.5 rounded-xl text-sm font-semibold border transition-all hover:bg-gray-50 flex items-center justify-center gap-1.5"
+    style={{
+      borderColor: kategoriData?.warna || '#6B7280',
+      color: kategoriData?.warna || '#6B7280',
+    }}
+  >
+    Petunjuk Arah
+  </button>
+
+  {/* Tutup */}
+  <button
+    onClick={onClose}
+    className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
+    style={{ backgroundColor: kategoriData?.warna || '#6B7280' }}
+  >
+    Tutup
+  </button>
+
+</div>
 
       </div>
     </div>

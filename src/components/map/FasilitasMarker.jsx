@@ -6,6 +6,14 @@ import { useMemo } from 'react';
 import { createMarkerIcon } from '@/lib/markerIcon';
 import { KATEGORI } from '@/data/fasilitas';
 
+function bukaGoogleMaps(koordinat) {
+  const [lat, lng] = koordinat;
+  // Kalau mobile → buka app Google Maps langsung
+  // Kalau desktop → buka Google Maps web
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+  window.open(url, '_blank');
+}
+
 export default function FasilitasMarker({ fasilitas, onLihatDetail }) {
   const kategoriData = useMemo(() =>
     Object.values(KATEGORI).find((k) => k.id === fasilitas.kategori),
@@ -53,17 +61,31 @@ export default function FasilitasMarker({ fasilitas, onLihatDetail }) {
             </h3>
           </div>
 
-          {/* Tombol */}
-          <div className="px-3 pb-3 pt-1">
+          {/* Tombol — 2 tombol sejajar */}
+          <div className="px-3 pb-3 pt-1 flex gap-1.5">
+
+            {/* Lihat Detail */}
             <button
               onClick={() => onLihatDetail(fasilitas)}
-              className="w-full py-1.5 rounded-lg text-white text-[11px] font-semibold transition-opacity hover:opacity-90 flex items-center justify-center gap-1"
+              className="flex-1 py-1.5 rounded-lg text-white text-[10px] font-semibold transition-opacity hover:opacity-90"
               style={{ backgroundColor: kategoriData?.warna || '#6B7280' }}
             >
-              Lihat Detail →
+              Detail
             </button>
-          </div>
 
+            {/* Navigasi */}
+            <button
+              onClick={() => bukaGoogleMaps(fasilitas.koordinat)}
+              className="flex-1 py-1.5 rounded-lg text-[10px] font-semibold border transition-all hover:bg-gray-50 flex items-center justify-center gap-1"
+              style={{
+                borderColor: kategoriData?.warna || '#6B7280',
+                color: kategoriData?.warna || '#6B7280',
+              }}
+            >
+              Petunjuk Arah
+            </button>
+
+          </div>
         </div>
       </Popup>
     </Marker>
