@@ -88,3 +88,11 @@ body {
 .leaflet-marker-icon:hover div {
   transform: rotate(-45deg) scale(1.15) !important;
 }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  overscroll-behavior: none;
+}

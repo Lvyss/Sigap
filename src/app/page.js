@@ -70,12 +70,12 @@ export default function Home() {
       <div
         className="flex-shrink-0 border-b-2 border-black bg-white overflow-hidden transition-all duration-300 ease-in-out"
         style={{
-          maxHeight: isFullscreen ? '0px' : '80px',
+          maxHeight: isFullscreen ? '0px' : '180px',
           opacity: isFullscreen ? 0 : 1,
           borderBottomWidth: isFullscreen ? '0px' : '2px',
         }}
       >
-        <div className="relative flex items-center justify-center px-4 py-2">
+        <div className="relative flex items-center justify-center px-4 py-4">
           <div className="flex flex-col items-center">
             <h1
               className="text-sm font-medium text-black uppercase tracking-widest leading-tight text-center"
@@ -110,14 +110,15 @@ export default function Home() {
 
         {/* PETA */}
         <div className="flex-1 h-full relative min-w-0">
-          <MapWrapper
-            onLihatDetail={setSelectedFasilitas}
-            flyToTarget={flyToTarget}
-            posisiUser={posisiUser}
-            aktifFilter={aktifFilter}
-            onZoomChange={handleZoomChange}
-            isFullscreen={isFullscreen}
-          />
+<MapWrapper
+  onLihatDetail={setSelectedFasilitas}
+  flyToTarget={flyToTarget}
+  posisiUser={posisiUser}
+  aktifFilter={aktifFilter}
+  onZoomChange={handleZoomChange}
+  isFullscreen={isFullscreen}
+  isMobile={isMobile}
+/>
 
           {/* Tombol GPS + Fullscreen */}
           <TombolFullscreen
@@ -177,14 +178,16 @@ export default function Home() {
           </div>
         )}
 
-        {/* MOBILE: Bottom Sheet */}
-        {isMobile && (
-          <BottomSheet
-            onFasilitasClick={handleFasilitasClick}
-            selectedId={selectedId}
-            onFilterChange={setAktifFilter}
-          />
-        )}
+{isMobile && (
+  <BottomSheet
+    onFasilitasClick={handleFasilitasClick}
+    selectedId={selectedId}
+    onFilterChange={setAktifFilter}
+    isFullscreen={isFullscreen}
+    mapZoom={mapZoom}
+    mapLat={mapLat}
+  />
+)}
 
       </div>
 

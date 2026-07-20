@@ -30,7 +30,7 @@ function SetInitialView() {
   return null;
 }
 
-export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter, onZoomChange, isFullscreen }) {
+export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifFilter, onZoomChange, isFullscreen ,isMobile }) {
   return (
     <MapContainer
       center={MAP_CONFIG.center}
@@ -50,7 +50,7 @@ export default function MapView({ onLihatDetail, flyToTarget, posisiUser, aktifF
       <LapisanJalan />
       <GarisBatas />
       <FasilitasLayer onLihatDetail={onLihatDetail} aktifFilter={aktifFilter} />
-      <FlyToHandler target={flyToTarget} />
+      <FlyToHandler target={flyToTarget} isMobile={isMobile} />
       <LokasiMarker posisi={posisiUser} />
       <MapResizer isFullscreen={isFullscreen} />
       <ZoomWatcher onZoomChange={onZoomChange} />
