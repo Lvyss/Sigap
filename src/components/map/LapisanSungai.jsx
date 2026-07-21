@@ -34,20 +34,20 @@ export default function LapisanSungai() {
         const waterway = feature?.properties?.waterway;
         if (waterway === "river") {
           return {
-            color: "#60A5FA",
+            color: "#7dc8fb",
             weight: 2.5,
             opacity: 0.8,
             fillOpacity: 0,
           };
         } else if (waterway === "stream") {
           return {
-            color: "#93C5FD",
+            color: "#7dc8fb",
             weight: 1.5,
             opacity: 0.6,
             fillOpacity: 0,
           };
         } else {
-          return { color: "#BFDBFE", weight: 1, opacity: 0.7, fillOpacity: 0 };
+          return { color: "#7dc8fb", weight: 1, opacity: 0.7, fillOpacity: 0 };
         }
       }}
     />

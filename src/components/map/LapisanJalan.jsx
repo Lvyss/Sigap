@@ -28,11 +28,11 @@ export default function LapisanJalan() {
 style={(feature) => {
   const highway = feature?.properties?.highway;
   if (highway === 'primary' || highway === 'secondary') {
-    return { color: '#EF4444', weight: 1.5, opacity: 0.9, fillOpacity: 0 }; // merah tebal
+    return { color: '#f03da3', weight: 1.5, opacity: 0.9, fillOpacity: 0 }; // merah tebal
   } else if (highway === 'tertiary' || highway === 'residential') {
-    return { color: '#EF4444', weight: 1.5, opacity: 0.6, fillOpacity: 0 }; // merah tipis
+    return { color: '#f03da3', weight: 1.5, opacity: 0.6, fillOpacity: 0 }; // merah tipis
   } else {
-    return { color: '#EF4444', weight: 2.5, opacity: 0.8, fillOpacity: 0 };   // merah tipis banget
+    return { color: '#f03da3', weight: 2.5, opacity: 0.8, fillOpacity: 0 };   // merah tipis banget
   }
 }}
     />
