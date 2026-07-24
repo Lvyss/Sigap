@@ -65,74 +65,60 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
     >
 
 {/* ── KOMPAS + SKALA ── */}
-<div className="px-3 py-1 flex-shrink-0 flex items-center gap-2">
-
-  {/* Kompas PNG */}
+<div className="px-0 py-1 flex-shrink-0 flex items-center gap-2"> {/* ganti px-3 jadi px-0 */}
+  {/* Kompas PNG - tetap dengan padding kiri */}
   <img
     src="/images/kompas.png"
     alt="Kompas"
-    className="w-10 h-10 object-contain flex-shrink-0"
+    className="w-10 h-10 object-contain flex-shrink-0 ml-3" // tambah ml-3
     onError={(e) => { e.target.style.display = 'none'; }}
   />
 
   {/* Skala */}
   <div className="flex flex-col gap-0.5 flex-shrink-0">
-    <p
-      className="text-[10px] font-medium text-black uppercase whitespace-nowrap"
-      style={{ fontFamily: "'Oswald', sans-serif" }}
-    >
+    <p className="text-[10px] font-medium text-black uppercase whitespace-nowrap"
+      style={{ fontFamily: "'Oswald', sans-serif" }}>
       SKALA : {formatSkala(scale)}
     </p>
-{/* Bar skala — set width fixed langsung */}
-<div className="flex w-38">
-  {/* ↑ ganti w-32 → w-40, w-48, w-56 untuk lebih panjang */}
-  {[0, 1, 2, 3].map((i) => (
-    <div
-      key={i}
-      className="h-2 border border-black flex-1"
-      style={{
-        backgroundColor: i % 2 === 0 ? '#000' : '#fff',
-      }}
-    />
-  ))}
-</div>
-
-{/* Label angka — samain width-nya */}
-<div className="flex justify-between w-38">
-  {/* ↑ samain dengan div bar di atas */}
-  <span className="text-[7px] text-black">0</span>
-  <span className="text-[7px] text-black">{bar.midLabel}</span>
-  <span className="text-[7px] text-black">{bar.label}</span>
-</div>
+    <div className="flex w-38">
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i}
+          className="h-2 border border-black flex-1"
+          style={{ backgroundColor: i % 2 === 0 ? '#000' : '#fff' }}
+        />
+      ))}
+    </div>
+    <div className="flex justify-between w-38">
+      <span className="text-[7px] text-black">0</span>
+      <span className="text-[7px] text-black">{bar.midLabel}</span>
+      <span className="text-[7px] text-black">{bar.label}</span>
+    </div>
   </div>
 
-  {/* Coordinate info — sebelah kanan skala */}
-  <div className="flex flex-col gap-0 ml-2 min-w-0">
-    <p className="text-[9px] text-black whitespace-nowrap leading-tight">
+  {/* Coordinate info — mentok kanan dengan flex-1 + justify-end */}
+  <div className="flex flex-col gap-0 ml-auto pr-3"> {/* ganti ml-2 jadi ml-auto pr-3 */}
+    <p className="text-[9px] text-black whitespace-nowrap leading-tight text-left">
       Coordinate System : GCS WGS 1984
     </p>
-    <p className="text-[9px] text-black whitespace-nowrap leading-tight">
+    <p className="text-[9px] text-black whitespace-nowrap leading-tight text-left">
       Datum : 1984
     </p>
-        <p className="text-[9px] text-black whitespace-nowrap leading-tight">
+    <p className="text-[9px] text-black whitespace-nowrap leading-tight text-left">
       Units : Degree
     </p>
   </div>
-
 </div>
 
       {/* ── DIVIDER TEBAL ── */}
       <div className=" border-t-2 border-black flex-shrink-0" />
 
 {/* ── LEGENDA ── */}
-<div className="px-3 py-1 flex-shrink-0">
-  <p
-    className="text-[12px] font-medium text-black uppercase tracking-widest mb-1.5" 
-    style={{ fontFamily: "'Oswald', sans-serif" }}
-  >
+<div className="px-0 py-1 flex-shrink-0"> {/* ganti px-3 jadi px-0 */}
+  <p className="text-[12px] font-medium text-black uppercase tracking-widest mb-1.5 pl-3" // tambah pl-3
+    style={{ fontFamily: "'Oswald', sans-serif" }}>
     Legenda
   </p>
-  <div className="flex flex-row flex-wrap gap-x-[92px] gap-y-1">
+  <div className="flex flex-row flex-wrap gap-x-[116px] gap-y-1 px-3"> {/* tambah px-3 di sini */}
     {LEGENDA_GARIS.map((item) => (
       <div key={item.label} className="flex items-center gap-2">
         <div className="w-6 flex-shrink-0" style={item.style} />
@@ -143,19 +129,17 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
 </div>
 
 {/* ── JUDUL POTENSI — fixed ── */}
-<div className="px-3 pt-1 flex-shrink-0">
-  <p
-    className="text-[12px] font-medium text-black uppercase tracking-widest"
-    style={{ fontFamily: "'Oswald', sans-serif" }}
-  >
+<div className="px-0 pt-1 flex-shrink-0">
+  <p className="text-[12px] font-medium text-black uppercase tracking-widest pl-3"
+    style={{ fontFamily: "'Oswald', sans-serif" }}>
     Potensi Desa Jengglungharjo
   </p>
 </div>
 
 {/* ── SEARCH — fixed ── */}
-<div className="px-3 py-1.5 flex-shrink-0">
-  <div className="relative">
-    <Search size={11} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-black" />
+<div className="px-0 py-1.5 flex-shrink-0">
+  <div className="relative px-3"> {/* tambah px-3 di sini */}
+    <Search size={11} className="absolute left-4.5 top-1/2 -translate-y-1/2 text-black" />
     <input
       type="text"
       value={searchQuery}
@@ -166,7 +150,7 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
     {searchQuery && (
       <button
         onClick={() => setSearchQuery('')}
-        className="absolute right-2 top-1/2 -translate-y-1/2"
+        className="absolute right-4 top-1/2 -translate-y-1/2"
       >
         <X size={10} />
       </button>
@@ -258,20 +242,20 @@ export default function PanelKanan({ onFasilitasClick, selectedId, onFilterChang
   {/* ── DIVIDER ── */}
   <div className="border-t-2  border-black" />
 
-  {/* ── SUMBER PETA ── */}
-  <div className="px-4 py-1 flex-shrink-0">
-    <p
-      className="text-[12px] font-medium text-black uppercase tracking-widest mb-0.5"
-      style={{ fontFamily: "'Oswald', sans-serif" }}
-    >
-      Sumber Peta
-    </p>
-    <ol className="list-decimal list-inside flex flex-row flex-wrap gap-x-2">
-      <li className="text-[9px] text-black">Peta Rupa Bumi Indonesia</li>
-      <li className="text-[9px] text-black">Open Street Map</li>
-      <li className="text-[9px] text-black">Basemap Google Satellite Hybrid</li>
-    </ol>
-  </div>
+{/* ── SUMBER PETA ── */}
+<div className="px-0 py-1 flex-shrink-0"> {/* ganti px-4 jadi px-0 */}
+  <p className="text-[12px] font-medium text-black uppercase tracking-widest mb-0.5 pl-4"
+    style={{ fontFamily: "'Oswald', sans-serif" }}>
+    Sumber Peta
+  </p>
+  <ol className="list-decimal list-inside flex flex-row flex-wrap gap-x-[33px] px-4"> {/* tambah px-4 di sini */}
+    <li className="text-[9px] text-black">Peta Rupa Bumi Indonesia</li>
+    <li className="text-[9px] text-black">Open Street Map</li>
+    <li className="text-[9px] text-black">Basemap Google Satellite Hybrid</li>
+  </ol>
+</div>
+
+
 
   {/* ── DIVIDER ── */}
   <div className="border-t-2  border-black" />

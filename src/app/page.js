@@ -66,44 +66,83 @@ export default function Home() {
   return (
     <div className="w-screen h-screen flex flex-col overflow-hidden bg-white">
 
-      {/* ── HEADER ── */}
-      <div
-        className="flex-shrink-0 border-b-2 border-black bg-white overflow-hidden transition-all duration-300 ease-in-out"
-        style={{
-          maxHeight: isFullscreen ? '0px' : '180px',
-          opacity: isFullscreen ? 0 : 1,
-          borderBottomWidth: isFullscreen ? '0px' : '2px',
-        }}
+{/* ── HEADER ── */}
+<div
+  className="flex-shrink-0 border-b-2 border-black bg-white overflow-hidden transition-all duration-300 ease-in-out"
+  style={{
+    maxHeight: isFullscreen ? '0px' : isMobile ? '70px' : '100px',
+    opacity: isFullscreen ? 0 : 1,
+    borderBottomWidth: isFullscreen ? '0px' : '2px',
+  }}
+>
+  <div className="flex items-center justify-between px-2 py-1.5 h-full">
+
+    {/* KIRI: Logo Kabupaten */}
+    <div className="flex items-center flex-shrink-0">
+      <img
+        src="/images/Logo Kab.png"
+        alt="Logo Kabupaten Tulungagung"
+        className={`object-contain ${isMobile ? 'w-10 h-10' : 'w-16 h-16'}`}
+        onError={(e) => { e.target.style.display = 'none'; }}
+      />
+    </div>
+
+    {/* TENGAH: Judul */}
+    <div className="flex flex-col items-center flex-1 mx-2">
+      <h1
+        className={`font-bold text-black uppercase tracking-wide text-center leading-tight ${
+          isMobile ? 'text-[9px]' : 'text-sm'
+        }`}
+        style={{ fontFamily: "'Oswald', sans-serif" }}
       >
-        <div className="relative flex items-center justify-center px-4 py-4">
-          <div className="flex flex-col items-center">
-            <h1
-              className="text-sm font-medium text-black uppercase tracking-widest leading-tight text-center"
-              style={{ fontFamily: "'Oswald', sans-serif" }}
-            >
-              Peta Potensi Desa Jengglungharjo
-            </h1>
-            {!isMobile && (
-              <>
-                <p className="text-xs font-medium text-black uppercase tracking-wide text-center" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                  Kecamatan Tanggunggunung, Kabupaten Tulungagung
-                </p>
-                <p className="text-xs font-medium text-black uppercase tracking-wide text-center" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                  Provinsi Jawa Timur
-                </p>
-              </>
-            )}
-          </div>
-          <div className="absolute right-4">
-            <img
-              src="/images/Logo Kab.png"
-              alt="Logo"
-              className={`object-contain ${isMobile ? 'w-10 h-10' : 'w-16 h-16'}`}
-              onError={(e) => { e.target.style.display = 'none'; }}
-            />
-          </div>
-        </div>
-      </div>
+        Peta Potensi Desa Jengglungharjo
+      </h1>
+      <p
+        className={`font-bold text-black uppercase tracking-wide text-center leading-tight ${
+          isMobile ? 'text-[8px]' : 'text-sm'
+        }`}
+        style={{ fontFamily: "'Oswald', sans-serif" }}
+      >
+        Kecamatan Tanggunggunung, Kabupaten Tulungagung
+      </p>
+      <p
+        className={`font-bold text-black uppercase tracking-wide text-center leading-tight ${
+          isMobile ? 'text-[8px]' : 'text-sm'
+        }`}
+        style={{ fontFamily: "'Oswald', sans-serif" }}
+      >
+        Provinsi Jawa Timur
+      </p>
+
+      {/* Baris ke-4 — sembunyikan di mobile */}
+      {!isMobile && (
+        <p
+          className="text-sm font-bold text-black uppercase tracking-wide text-center leading-4"
+          style={{ fontFamily: "'Oswald', sans-serif" }}
+        >
+          UM BBM Desa Jengglungharjo Tahun 2026
+        </p>
+      )}
+    </div>
+
+    {/* KANAN: 2 Logo */}
+    <div className={`flex items-center flex-shrink-0 ${isMobile ? 'gap-1' : 'gap-2'}`}>
+      <img
+        src="/images/Logo Univ.png"
+        alt="Logo Universitas"
+        className={`object-contain ${isMobile ? 'w-10 h-10' : 'w-16 h-16'}`}
+        onError={(e) => { e.target.style.display = 'none'; }}
+      />
+      <img
+        src="/images/Logo Desa.png"
+        alt="Logo Desa"
+        className={`object-contain ${isMobile ? 'w-10 h-10' : 'w-16 h-16'}`}
+        onError={(e) => { e.target.style.display = 'none'; }}
+      />
+    </div>
+
+  </div>
+</div>
 
       {/* ── BODY ── */}
       <div className="flex flex-1 overflow-hidden min-h-0 relative">
